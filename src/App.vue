@@ -97,19 +97,27 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <button
+                            @click.prevent="formSubmitted"
                             class="btn btn-primary">Submit!
                     </button>
                 </div>
             </div>
+
+              <div class="row">
+                <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+                 <app-switcher v-model="switched" @input="switchSomething"></app-switcher>
+
+                </div>
+            </div>
         </form>
         <hr>
-        <div class="row">
+        <div class="row" v-if="isSubmitted">
             <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4>Your Data</h4>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" >
                         <p>Mail: {{ userData.email }}</p>
                         <p>Password: {{ userData.password }}</p>
                         <p>Age: {{ userData.age }}</p>
@@ -120,7 +128,7 @@
                         </ul>
                         <p>Gender:{{ gender }}</p>
                         <p>Priority: {{setPriority}} </p>
-                        <p>Switched:</p>
+                        <p>Switched: {{ switched }}</p>
                     </div>
                 </div>
             </div>
@@ -129,6 +137,8 @@
 </template>
 
 <script>
+import Switch from './component/Switch.vue';
+
     export default {
         data() {
             return {
@@ -143,9 +153,23 @@
                     gender: 'Male',
                     priorities: ['High', 'Low', 'Medium'],
                     setPriority: 'High',
+                    dataSwitch: true,
+                    switched: true,
+                    isSubmitted: false
 
             }
         },
+        components: {
+            appSwitcher: Switch
+        },
+        methods: {
+            switchSomething(isOn){
+                this.switched = !isOne
+            },
+            formSubmitted(event){
+                this.isSubmitted = !this.isSubmitted;
+            }
+        }
     }
 </script>
 
